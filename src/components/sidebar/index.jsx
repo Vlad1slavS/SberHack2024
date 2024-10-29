@@ -38,7 +38,7 @@ export default function Sidebar() {
           <div className="flex items-center">
             <img
               className="h-12 w-12 rounded-xl mr-2"
-              src="src/assets/unnamed.jpg"
+              src="/public/unnamed.jpg"
               alt="ЗабГу"
             />
             <p className="text-white font-bold">ЗабГУ</p>
@@ -46,7 +46,7 @@ export default function Sidebar() {
             <p className="text-white font-bold">СБЕР</p>
             <img
               className="h-12 w-12 rounded-xl ml-2"
-              src="src/assets/SBERlogo.png"
+              src="/public/SBERlogo.png"
               alt="Сбер"
             />
           </div>
