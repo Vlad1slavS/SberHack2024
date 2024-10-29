@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@2gis/mapgl-directions@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@2gis/mapgl-directions/-/mapgl-directions-2.0.3.tgz#02f9d4d3f3856a4d699b2738d51c57230512a2ea"
+  integrity sha512-VRt7JC3t027sm6VWPFi5TAMVoRk2M9BvQWuGC8IyE1E39snR2mQgGTTMkkxLubc9RXaDnhFBPhLnkJC/a54DdQ==
+
 "@2gis/mapgl@^1.52.0":
   version "1.52.0"
   resolved "https://registry.yarnpkg.com/@2gis/mapgl/-/mapgl-1.52.0.tgz#22d21b52f99d473c8b96d30ddf5afd978a185bbc"

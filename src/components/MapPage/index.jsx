@@ -3,11 +3,13 @@ import { load } from "@2gis/mapgl";
 import { InputText } from "primereact/inputtext";
 
 const faculties = [
-  { id: 1, name: "Энергетический (ЭФ)" },
-  { id: 2, name: "Факультет математики" },
-  { id: 3, name: "Факультет физики" },
-  { id: 4, name: "Факультет биологии" },
-  { id: 5, name: "Факультет химии" },
+  { id: 1, name: "Энергетический (ЭФ)", coord: [113.52811, 52.03531] },
+  { id: 2, name: "Строительный", coord: [113.52963, 52.0321] },
+  { id: 3, name: "Юридический", coord: [113.52963, 52.0321] },
+  { id: 4, name: "Экономический", coord: [113.52963, 52.0321] },
+  { id: 5, name: "Горный", coord: [113.52963, 52.0321] },
+  { id: 6, name: "Социологический", coord: [113.52963, 52.0321] },
+  { id: 7, name: "Историко-Филологический", coord: [113.52963, 52.0321] },
 ];
 
 export default function MapPage() {
@@ -91,7 +93,7 @@ export default function MapPage() {
             </small>
 
             {fromFilteredFaculties.length > 0 && (
-              <ul className="absolute bg-white border border-gray-300 z-10 mt-1 max-h-60 overflow-auto rounded-lg">
+              <ul className="absolute top-64 bg-white border border-gray-300 z-10 mt-1 max-h-60 overflow-auto rounded-lg">
                 {fromFilteredFaculties.map((faculty) => (
                   <li
                     key={faculty.id}
@@ -99,7 +101,6 @@ export default function MapPage() {
                     onClick={() => {
                       setFromInputValue(faculty.name);
                       setFromFilteredFaculties([]); // Очищаем подсказки
-                      setToInputValue(""); // Сбрасываем значение во втором поле
                       setToFilteredFaculties([]); // Очищаем подсказки во втором поле
                     }}
                   >
@@ -124,7 +125,7 @@ export default function MapPage() {
             </small>
 
             {toFilteredFaculties.length > 0 && (
-              <ul className="absolute bg-white border border-gray-300 z-10 mt-1 max-h-60 overflow-auto rounded-lg">
+              <ul className="absolute top-64 bg-white border border-gray-300 z-10 mt-1 max-h-60 overflow-auto rounded-lg">
                 {toFilteredFaculties.map((faculty) => (
                   <li
                     key={faculty.id}
@@ -132,7 +133,6 @@ export default function MapPage() {
                     onClick={() => {
                       setToInputValue(faculty.name);
                       setToFilteredFaculties([]); // Очищаем подсказки
-                      setFromInputValue(""); // Сбрасываем значение в первом поле
                       setFromFilteredFaculties([]); // Очищаем подсказки в первом поле
                     }}
                   >
