@@ -4,8 +4,7 @@ import { Accordion, AccordionTab } from "primereact/accordion";
 const questions = [
   {
     question: "Где я могу заказать справку об обучении?",
-    answer:
-      "Справка об обучении заказывается в деканате",
+    answer: "Справка об обучении заказывается в деканате",
   },
   {
     question: "Что такое JSX?",

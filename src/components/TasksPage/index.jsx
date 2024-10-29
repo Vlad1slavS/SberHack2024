@@ -64,10 +64,17 @@ const TaskBoard = () => {
 
   return (
     <>
-      <div className="flex justify-end mb-4">
-        <button onClick={clearAllFields} className="bg-red-500 text-white rounded px-4 py-2">Очистить все поля</button>
+      <div className="flex justify-end  mt-8">
+        <button
+          onClick={clearAllFields}
+          className="bg-red-500 text-white rounded px-4 py-2"
+        >
+          Очистить все поля
+        </button>
       </div>
-      <div className="flex p-4 h-full w-full overflow-x-auto"> {/* Обеспечиваем использование всей ширины и добавляем прокрутку */}
+      <div className="flex p-4 h-full w-full overflow-x-auto">
+        {" "}
+        {/* Обеспечиваем использование всей ширины и добавляем прокрутку */}
         {Object.entries(columns).map(([day, tasks]) => (
           <div
             key={day}
