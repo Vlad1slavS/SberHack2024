@@ -1,8 +1,16 @@
 import React, { useState } from "react";
+import { useAuth } from "../../components/hooks/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
+  const navigate = useNavigate(); // Импортируем useNavigate
+
+  const handleHome = () => {
+    navigate("/home");
+  };
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const { setIsAuthenticated } = useAuth();
 
   const handleLoginChange = (e) => {
     setLogin(e.target.value);
@@ -16,6 +24,8 @@ export default function Auth() {
     e.preventDefault();
     // Здесь можно добавить логику авторизации, например, отправку данных на сервер
     console.log("Авторизация", { login, password });
+    //
+    setIsAuthenticated(true);
   };
 
   return (
@@ -41,6 +51,7 @@ export default function Auth() {
         />
         <button
           type="submit"
+          onClick={handleSubmit}
           className="bg-blue-500 text-white rounded-md p-2 w-full"
         >
           Войти

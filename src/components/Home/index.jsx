@@ -13,7 +13,7 @@ export default function Home() {
     <div className="container mx-auto mt-10">
       <div className="header flex justify-between mt-20">
         <div>
-          <div className="flex flex-wrap w-[800px]">
+          <div className="flex flex-wrap w-[800px] mr-10">
             <a
               className="home_card hover-effect bg-gradient-to-r w-[250px] from-[#d999eb] to-[#66d9b3] text-black font-bold pt-2 px-4 rounded-xl"
               href="#"
@@ -62,7 +62,7 @@ export default function Home() {
               </p>
             </a>
           </div>
-          <div className="mt-16">
+          <div className="mt-16 w-[800px]">
             <p className="font-bold text-xl">Новости</p>
             <div className="border-2 rounded-lg p-4">-</div>
           </div>

@@ -168,7 +168,7 @@ export default function MapPage() {
           <div className="flex flex-col relative">
             <label htmlFor="facultyFromInput">Откуда</label>
             <InputText
-              className="max-w-[200px] p-2"
+              className="max-w-[200px] p-2 border-2"
               id="facultyFromInput"
               value={fromInputValue}
               onChange={handleFromInputChange}
@@ -198,7 +198,7 @@ export default function MapPage() {
           <div className="flex flex-col relative">
             <label htmlFor="facultyToInput">Куда</label>
             <InputText
-              className="max-w-[200px] p-2"
+              className="max-w-[200px] p-2 border-2"
               id="facultyToInput"
               value={toInputValue}
               onChange={handleToInputChange}

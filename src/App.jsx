@@ -8,6 +8,7 @@ import TaskBoard from "./components/TasksPage";
 import EventsPage from "./components/EventsPage";
 import FaQPage from "./components/FaQPage";
 import "primereact/resources/themes/saga-blue/theme.css";
+import { AuthProvider } from "./components/hooks/AuthContext";
 
 function MainApp() {
   const location = useLocation();
@@ -16,7 +17,8 @@ function MainApp() {
   const isAuthPage = location.pathname === "/auth";
 
   return (
-    <div className="h-screen bg-[#f5f6f8]">
+    <AuthProvider>
+    <div className="h-full bg-[#ffff]">
       {/* Скрываем Sidebar, если пользователь находится на странице авторизации */}
       {!isAuthPage && <Sidebar />}
       <div className="">
@@ -32,6 +34,7 @@ function MainApp() {
         </Routes>
       </div>
     </div>
+    </AuthProvider>
   );
 }
 

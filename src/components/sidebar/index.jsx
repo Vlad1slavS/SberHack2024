@@ -6,9 +6,13 @@ import { AiOutlineQuestion } from "react-icons/ai";
 import { BsCalendar4Event } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoHome } from "react-icons/io5";
+import { useAuth } from "../hooks/AuthContext";
+import { CgProfile } from "react-icons/cg";
 
 export default function Sidebar() {
   const navigate = useNavigate(); // Импортируем useNavigate
+
+  const { isAuthenticated } = useAuth(); // Получаем статус аутентификации
 
   const handleLogin = () => {
     // Перенаправляем на /auth при нажатии кнопки
@@ -102,16 +106,22 @@ export default function Sidebar() {
               <BsCalendar4Event className="text-white shadow-lg h-11 w-11 p-2 rounded-xl" />
             </a>
           </div>
-          <div className="flex">
+          <div className="flex items-center">
             <a href="">
               <IoMdNotificationsOutline className="text-white shadow-lg h-12 w-12 p-2 rounded-full bg-gray-700 mr-6 " />
             </a>
-            <button
-              className="bg-lime-400 px-4 py-2 rounded-2xl mr-4 font-bold hover:bg-lime-300 transition-all 0.4s"
-              onClick={handleLogin} // Вызываем handleLogin при нажатии
-            >
-              Войти
-            </button>
+            {!isAuthenticated ? (
+              <button
+                className="bg-lime-400 px-4 py-2 rounded-2xl mr-4 font-bold hover:bg-lime-300 transition-all 0.4s"
+                onClick={handleLogin} // Вызываем handleLogin при нажатии
+              >
+                Войти
+              </button>
+            ) : (
+              <a>
+                <CgProfile size={50}/>
+              </a>
+            )}
           </div>
         </div>
       </div>
