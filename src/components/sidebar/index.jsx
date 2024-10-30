@@ -118,7 +118,7 @@ export default function Sidebar() {
                 Войти
               </button>
             ) : (
-              <a>
+              <a href="#">
                 <CgProfile size={50}/>
               </a>
             )}
