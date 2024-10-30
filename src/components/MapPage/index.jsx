@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { load } from "@2gis/mapgl";
 import { InputText } from "primereact/inputtext";
+import { InputSwitch } from "primereact/inputswitch";
+import { FaCar } from "react-icons/fa6";
+import { FaRunning } from "react-icons/fa";
+import { Directions } from "@2gis/mapgl-directions";
 
 const faculties = [
   { id: 1, name: "Энергетический (ЭФ)", coord: [113.53189, 52.03427] },
@@ -21,6 +25,8 @@ export default function MapPage() {
   const [fromFilteredFaculties, setFromFilteredFaculties] = useState([]);
   const [toFilteredFaculties, setToFilteredFaculties] = useState([]);
   const [currentLocation, setCurrentLocation] = useState([113.5, 52]); // default coordinates
+  const [checked, setChecked] = useState(false);
+  const [directions, setDirections] = useState(null);
 
   useEffect(() => {
     // Получаем текущее местоположение пользователя
@@ -50,11 +56,18 @@ export default function MapPage() {
         key: "9f817a89-0b26-4d25-8b60-49bee22dee98",
       });
 
-      markers = faculties.map((faculty) => 
-        new mapglAPI.Marker(map, {
-          coordinates: faculty.coord,
-        })
+      markers = faculties.map(
+        (faculty) =>
+          new mapglAPI.Marker(map, {
+            coordinates: faculty.coord,
+          })
       );
+
+      const directions = new Directions(map, {
+        directionsApiKey: "9f817a89-0b26-4d25-8b60-49bee22dee98",
+      });
+      setDirections(directions);
+      console.log(directions);
     });
 
     return () => {
@@ -63,7 +76,7 @@ export default function MapPage() {
       }
       markers.forEach((marker) => marker.destroy());
     };
-  }, [currentLocation]);  // добавлена зависимость от currentLocation
+  }, [currentLocation]);
 
   const handleFromInputChange = (e) => {
     const value = e.target.value;
@@ -94,6 +107,54 @@ export default function MapPage() {
       setToFilteredFaculties(filtered);
     } else {
       setToFilteredFaculties([]);
+    }
+  };
+
+  const buildRoute = () => {
+    // Находим координаты выбранных факультетов
+    const fromFaculty = faculties.find(
+      (faculty) => faculty.name === fromInputValue
+    );
+    const toFaculty = faculties.find(
+      (faculty) => faculty.name === toInputValue
+    );
+
+    // Проверяем, что обе точки выбраны
+    if (fromFaculty && toFaculty && directions) {
+      const mode = checked ? "car" : "pedestrian"; 
+
+      // Очищаем предыдущий маршрут
+      directions.clear();
+
+      // Формируем маршрут
+      if (mode === "car") {
+        directions
+          .carRoute({
+            points: [
+              fromFaculty.coord , // начальная точка
+              toFaculty.coord, // конечная точка
+            ],
+          })
+          .catch((error) => {
+            console.error(
+              "Ошибка при построении автомобильного маршрута:",
+              error
+            );
+          });
+      } else {
+        directions
+          .pedestrianRoute({
+            points: [
+              fromFaculty.coord , // начальная точка
+              toFaculty.coord, // конечная точка
+            ],
+          })
+          .catch((error) => {
+            console.error("Ошибка при построении пешеходного маршрута:", error);
+          });
+      }
+    } else {
+      alert("Пожалуйста, выберите оба факультета для построения маршрута.");
     }
   };
 
@@ -164,8 +225,19 @@ export default function MapPage() {
               </ul>
             )}
           </div>
+          <div className="flex items-center">
+            <FaRunning className="mr-2 h-6" />
+            <InputSwitch
+              checked={checked}
+              onChange={(e) => setChecked(e.value)}
+            />
+            <FaCar className="ml-2 h-6" />
+          </div>
           <div>
-            <button className="bg-blue-500 hover:bg-blue-700 transition-all 0.4s p-2 text-white font-bold rounded">
+            <button
+              onClick={buildRoute}
+              className="bg-blue-500 hover:bg-blue-700 transition-all 0.4s p-2 text-white font-bold rounded"
+            >
               Построить маршрут
             </button>
           </div>
