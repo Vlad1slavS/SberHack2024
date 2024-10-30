@@ -33,7 +33,7 @@ export default function Sidebar() {
 
   return (
     <div className="">
-      <div className="sidebar bg-[#1f2937] shadow-lg p-2 rounded-b-md">
+      <div className="sidebar bg-white shadow-lg p-2 rounded-b-md">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center">
             <img
@@ -41,16 +41,16 @@ export default function Sidebar() {
               src="public/unnamed.jpg"
               alt="ЗабГу"
             />
-            <p className="text-white font-bold">ЗабГУ</p>
-            <span className="text-white mx-2">x</span>
-            <p className="text-white font-bold">СБЕР</p>
+            <p className="text-black font-bold">ЗабГУ</p>
+            <span className="text-black mx-2">x</span>
+            <p className="text-black font-bold">СБЕР</p>
             <img
-              className="h-12 w-12 rounded-xl ml-2"
+              className="h-12 w-12 rounded-xl ml-2 shadow-xl"
               src="public/SBERlogo.png"
               alt="Сбер"
             />
           </div>
-          <div className="flex p-1 items-center bg-white bg-opacity-10 backdrop-blur-10 shadow-lg rounded-xl">
+          <div className="flex p-1 items-center bg-gray-700 backdrop-blur-10 shadow-lg rounded-xl">
             <a
               onClick={handleHome}
               className="flex items-center hover-effect mr-4"
@@ -99,12 +99,12 @@ export default function Sidebar() {
               href=""
               title="Мероприятия"
             >
-              <BsCalendar4Event className="text-white shadow-lg h-11 w-11 mr-3 p-2 rounded-xl" />
+              <BsCalendar4Event className="text-white shadow-lg h-11 w-11 p-2 rounded-xl" />
             </a>
           </div>
           <div className="flex">
             <a href="">
-              <IoMdNotificationsOutline className="text-white shadow-lg h-12 w-12 p-2 rounded-full bg-white/20 mr-8 " />
+              <IoMdNotificationsOutline className="text-white shadow-lg h-12 w-12 p-2 rounded-full bg-gray-700 mr-6 " />
             </a>
             <button
               className="bg-lime-400 px-4 py-2 rounded-2xl mr-4 font-bold hover:bg-lime-300 transition-all 0.4s"

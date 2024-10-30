@@ -3,13 +3,16 @@ import { load } from "@2gis/mapgl";
 import { InputText } from "primereact/inputtext";
 
 const faculties = [
-  { id: 1, name: "Энергетический (ЭФ)", coord: [113.52811, 52.03531] },
-  { id: 2, name: "Строительный", coord: [113.52963, 52.0321] },
-  { id: 3, name: "Юридический", coord: [113.52963, 52.0321] },
-  { id: 4, name: "Экономический", coord: [113.52963, 52.0321] },
-  { id: 5, name: "Горный", coord: [113.52963, 52.0321] },
-  { id: 6, name: "Социологический", coord: [113.52963, 52.0321] },
-  { id: 7, name: "Историко-Филологический", coord: [113.52963, 52.0321] },
+  { id: 1, name: "Энергетический (ЭФ)", coord: [113.53189, 52.03427] },
+  { id: 2, name: "Строительный", coord: [113.52945, 52.03221] },
+  { id: 3, name: "Права и бизнеса", coord: [113.52501, 52.0319] },
+  { id: 4, name: "Экономический", coord: [113.52811, 52.03531] },
+  { id: 5, name: "Горный", coord: [113.49012, 52.03305] },
+  { id: 6, name: "Социологический", coord: [113.49967, 52.03925] },
+  { id: 7, name: "Историко-Филологический", coord: [113.5018, 52.03761] },
+  { id: 8, name: "Лицей ЗабГУ", coord: [113.49117, 52.03344] },
+  { id: 9, name: "Культуры и искусств", coord: [113.50207, 52.03836] },
+  { id: 10, name: "ФОК", coord: [113.52835, 52.03426] },
 ];
 
 export default function MapPage() {
@@ -17,28 +20,50 @@ export default function MapPage() {
   const [toInputValue, setToInputValue] = useState("");
   const [fromFilteredFaculties, setFromFilteredFaculties] = useState([]);
   const [toFilteredFaculties, setToFilteredFaculties] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState([113.5, 52]); // default coordinates
+
+  useEffect(() => {
+    // Получаем текущее местоположение пользователя
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentLocation([longitude, latitude]);
+        },
+        (error) => {
+          console.error("Ошибка при получении местоположения:", error);
+        }
+      );
+    } else {
+      console.warn("Геолокация не поддерживается вашим браузером");
+    }
+  }, []);
 
   useEffect(() => {
     let map;
+    let markers = [];
 
     load().then((mapglAPI) => {
       map = new mapglAPI.Map("foo", {
-        center: [113.5, 52],
-        zoom: 13,
+        center: currentLocation,
+        zoom: 15,
         key: "9f817a89-0b26-4d25-8b60-49bee22dee98",
       });
 
-      const marker = new mapglAPI.Marker(map, {
-        coordinates: [113.5, 52],
-      });
+      markers = faculties.map((faculty) => 
+        new mapglAPI.Marker(map, {
+          coordinates: faculty.coord,
+        })
+      );
     });
 
     return () => {
       if (map) {
         map.destroy();
       }
+      markers.forEach((marker) => marker.destroy());
     };
-  }, []);
+  }, [currentLocation]);  // добавлена зависимость от currentLocation
 
   const handleFromInputChange = (e) => {
     const value = e.target.value;
@@ -79,7 +104,7 @@ export default function MapPage() {
           Построй маршрут с 2GIS
         </h1>
         <div className="flex justify-between items-center mb-4">
-          <div className="flex flex-col">
+          <div className="flex flex-col relative">
             <label htmlFor="facultyFromInput">Откуда</label>
             <InputText
               className="max-w-[200px] p-2"
@@ -91,9 +116,8 @@ export default function MapPage() {
             <small className="mt-1" id="from-help">
               * Поле не должно быть пустым
             </small>
-
             {fromFilteredFaculties.length > 0 && (
-              <ul className="absolute top-64 bg-white border border-gray-300 z-10 mt-1 max-h-60 overflow-auto rounded-lg">
+              <ul className="absolute top-16 bg-white border border-gray-300 z-10 mt-1 max-h-60 overflow-auto rounded-lg">
                 {fromFilteredFaculties.map((faculty) => (
                   <li
                     key={faculty.id}
@@ -110,8 +134,7 @@ export default function MapPage() {
               </ul>
             )}
           </div>
-
-          <div className="flex flex-col">
+          <div className="flex flex-col relative">
             <label htmlFor="facultyToInput">Куда</label>
             <InputText
               className="max-w-[200px] p-2"
@@ -123,9 +146,8 @@ export default function MapPage() {
             <small className="mt-1" id="to-help">
               * Поле не должно быть пустым
             </small>
-
             {toFilteredFaculties.length > 0 && (
-              <ul className="absolute top-64 bg-white border border-gray-300 z-10 mt-1 max-h-60 overflow-auto rounded-lg">
+              <ul className="absolute top-16 bg-white border border-gray-300 z-10 mt-1 max-h-60 overflow-auto rounded-lg">
                 {toFilteredFaculties.map((faculty) => (
                   <li
                     key={faculty.id}
@@ -148,10 +170,9 @@ export default function MapPage() {
             </button>
           </div>
         </div>
-
         <div
           id="foo"
-          className="foo w-[1000px] h-[600px] border-2 p-2 rounded-lg bg-white"
+          className="w-[1000px] h-[600px] border-2 p-2 rounded-lg bg-white"
         ></div>
       </div>
     </div>
